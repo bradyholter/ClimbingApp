@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.animation.*;
 
+import java.io.PrintStream;
+
 public class HangboardTrainer extends Application {
 
     private Label timerLabel;
@@ -19,14 +21,14 @@ public class HangboardTrainer extends Application {
     private Label textLabel;
 
     private Timeline timeline;
-    private int secondsElapsed = 0;
+    private double secondsElapsed = 0.00;
 
     @Override
     public void start(Stage primaryStage) {
         edgeSizeField = new TextField();
         edgeSizeField.setPromptText("Edge size (mm)");
 
-        timerLabel = new Label("0s");
+        timerLabel = new Label("0.00s");
         timerLabel.setStyle("-fx-font-size: 40px;");
 
         textLabel = new Label("Enter Edge Size(mm): ");
@@ -45,7 +47,7 @@ public class HangboardTrainer extends Application {
         textLabel.relocate(10, 160);
         edgeSizeField.relocate(135, 157);
         climbingLabel.relocate(10, 10);
-        timerLabel.relocate(235, 40);
+        timerLabel.relocate(210, 40);
         startButton.relocate(10, 200);
         stopButton.relocate(10, 240);
         resetButton.relocate(100, 200);
@@ -58,14 +60,14 @@ public class HangboardTrainer extends Application {
     }
 
     private void startHang() {
-        secondsElapsed = 0;
-        timerLabel.setText("0s");
+        secondsElapsed = 0.00;
+        timerLabel.setText("0.00s");
         startButton.setDisable(true);
         stopButton.setDisable(false);
 
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-            secondsElapsed++;
-            timerLabel.setText(secondsElapsed + "s");
+        timeline = new Timeline(new KeyFrame(Duration.millis(10), e -> {
+            secondsElapsed += 0.01;
+            timerLabel.setText(String.format("%.2fs", secondsElapsed));
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
@@ -80,7 +82,12 @@ public class HangboardTrainer extends Application {
     }
 
     private void resetTimer() {
-
+        if (timeline != null) {
+            timeline.stop();
+        }
+        timerLabel.setText("0.00s");
+        stopButton.setDisable(true);
+        startButton.setDisable(false);
     }
 
     public static void main(String[] args) {
