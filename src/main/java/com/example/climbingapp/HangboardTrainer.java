@@ -15,6 +15,7 @@ public class HangboardTrainer extends Application {
     private Button startButton;
     private Button stopButton;
     private Button resetButton;
+    private Label climbingLabel;
 
     private Timeline timeline;
     private int secondsElapsed = 0;
@@ -30,16 +31,22 @@ public class HangboardTrainer extends Application {
         startButton = new Button("Start Hang");
         stopButton = new Button("Stop Hang");
         resetButton = new Button("Reset Timer");
+        climbingLabel = new Label("Climbing App: ");
         stopButton.setDisable(true);
 
         startButton.setOnAction(e -> startHang());
         stopButton.setOnAction(e -> stopHang());
         resetButton.setOnAction(e -> resetTimer());
 
-        VBox layout = new VBox(10, new Label("Edge Size (mm):"), edgeSizeField, timerLabel, startButton, stopButton, resetButton);
+        Pane layout = new Pane(climbingLabel, timerLabel, startButton, stopButton, resetButton);
+        climbingLabel.relocate(10, 10);
+        timerLabel.relocate(250, 40);
+        startButton.relocate(10, 200);
+        stopButton.relocate(10, 240);
+        resetButton.relocate(100, 200);
         layout.setStyle("-fx-padding: 20px;");
 
-        Scene scene = new Scene(layout, 600, 400);
+        Scene scene = new Scene(layout, 500, 400);
         primaryStage.setTitle("Hangboard Trainer");
         primaryStage.setScene(scene);
         primaryStage.show();
