@@ -9,6 +9,7 @@ import javafx.util.Duration;
 import javafx.animation.*;
 
 import java.io.PrintStream;
+import java.time.LocalDateTime;
 
 public class HangboardTrainer extends Application {
 
@@ -79,6 +80,11 @@ public class HangboardTrainer extends Application {
         }
         stopButton.setDisable(true);
         startButton.setDisable(false);
+
+        String edgeSize = edgeSizeField.getText();
+        HangSession session = new HangSession(LocalDateTime.now(), edgeSize, secondsElapsed);
+        CSVHandler.saveSession(session);
+
     }
 
     private void resetTimer() {
