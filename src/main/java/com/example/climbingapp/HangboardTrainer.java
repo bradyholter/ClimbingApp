@@ -16,6 +16,7 @@ public class HangboardTrainer extends Application {
     private Button stopButton;
     private Button resetButton;
     private Label climbingLabel;
+    private Label textLabel;
 
     private Timeline timeline;
     private int secondsElapsed = 0;
@@ -26,7 +27,9 @@ public class HangboardTrainer extends Application {
         edgeSizeField.setPromptText("Edge size (mm)");
 
         timerLabel = new Label("0s");
-        timerLabel.setStyle("-fx-font-size: 24px;");
+        timerLabel.setStyle("-fx-font-size: 40px;");
+
+        textLabel = new Label("Enter Edge Size(mm): ");
 
         startButton = new Button("Start Hang");
         stopButton = new Button("Stop Hang");
@@ -38,9 +41,11 @@ public class HangboardTrainer extends Application {
         stopButton.setOnAction(e -> stopHang());
         resetButton.setOnAction(e -> resetTimer());
 
-        Pane layout = new Pane(climbingLabel, timerLabel, startButton, stopButton, resetButton);
+        Pane layout = new Pane(climbingLabel, textLabel, edgeSizeField, timerLabel, startButton, stopButton, resetButton);
+        textLabel.relocate(10, 160);
+        edgeSizeField.relocate(135, 157);
         climbingLabel.relocate(10, 10);
-        timerLabel.relocate(250, 40);
+        timerLabel.relocate(235, 40);
         startButton.relocate(10, 200);
         stopButton.relocate(10, 240);
         resetButton.relocate(100, 200);
